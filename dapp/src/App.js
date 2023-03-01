@@ -71,9 +71,7 @@ function App() {
   }
 
   const initHistoryMsg = async () => {
-    const olds = await datalib.queryMsg();
-    setMsgs(olds);
-    await datalib.subscribeEvent(olds, (msgs) => {
+    await datalib.subscribeEvent((msgs) => {
       setMsgs(msgs);
     });
   }

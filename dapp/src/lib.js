@@ -45,8 +45,9 @@ export async function queryMsg() {
 }
 
 let storeMsgs = [];
-export async function subscribeEvent(initMsgs, cb) {
-  storeMsgs = initMsgs;
+export async function subscribeEvent(cb) {
+  storeMsgs = await queryMsg();
+  cb(storeMsgs);
   const devnetNftFilter = {
     All: [
       { EventType: 'MoveEvent' },

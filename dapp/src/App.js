@@ -70,14 +70,17 @@ function App() {
     setSending(false);
   }
 
-  const initHistoryMsg = async () => {
-    await datalib.subscribeEvent((msgs) => {
-      setMsgs(msgs);
-    });
-  }
-
   useEffect(() => {
-    initHistoryMsg();
+    let subid = null;
+    async function execute() {
+      subid = await datalib.subscribeEvent((msgs) => {
+        setMsgs(msgs);
+      });
+    }
+    execute();
+    return () => {
+      if (subid) datalib.unsubscribeEvent(subid);
+    }
   }, [])
 
   return (
